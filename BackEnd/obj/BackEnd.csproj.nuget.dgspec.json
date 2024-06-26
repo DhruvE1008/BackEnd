@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dhruv\\source\\repos\\BackEnd\\BackEnd.csproj": {}
+    "C:\\Users\\dhruv\\source\\repos\\BackEnd\\BackEnd\\BackEnd.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dhruv\\source\\repos\\BackEnd\\BackEnd.csproj": {
+    "C:\\Users\\dhruv\\source\\repos\\BackEnd\\BackEnd\\BackEnd.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dhruv\\source\\repos\\BackEnd\\BackEnd.csproj",
+        "projectUniqueName": "C:\\Users\\dhruv\\source\\repos\\BackEnd\\BackEnd\\BackEnd.csproj",
         "projectName": "BackEnd",
-        "projectPath": "C:\\Users\\dhruv\\source\\repos\\BackEnd\\BackEnd.csproj",
+        "projectPath": "C:\\Users\\dhruv\\source\\repos\\BackEnd\\BackEnd\\BackEnd.csproj",
         "packagesPath": "C:\\Users\\dhruv\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dhruv\\source\\repos\\BackEnd\\obj\\",
+        "outputPath": "C:\\Users\\dhruv\\source\\repos\\BackEnd\\BackEnd\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dhruv\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -46,6 +46,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
