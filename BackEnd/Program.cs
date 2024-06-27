@@ -29,8 +29,8 @@ app.MapGet("/iceCreams", () => IceCreamDB.GetIceCreams());
 app.MapPost("/iceCreams", (IceCream iceCream) => IceCreamDB.CreateIceCream(iceCream));
 app.MapPut("/iceCreams", (IceCream iceCream) => IceCreamDB.UpdateIceCream(iceCream));
 app.MapDelete("/iceCreams/{id}", (int id) => IceCreamDB.RemoveIceCream(id));
-app.MapGet("/pizzas", async (IceCreamDb db) => await db.IceCreams.ToListAsync());
-app.MapPost("/pizza", async (IceCreamDb db, IceCream iceCream) =>
+app.MapGet("/iceCreams", async (IceCreamDb db) => await db.IceCreams.ToListAsync());
+app.MapPost("/iceCream", async (IceCreamDb db, IceCream iceCream) =>
 {
     await db.IceCreams.AddAsync(iceCream);
     await db.SaveChangesAsync();
