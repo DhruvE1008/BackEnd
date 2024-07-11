@@ -1,3 +1,4 @@
+using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,17 +10,16 @@ using IceCreamStore.Models;
 using IceCreamStore.DB;
 
 var builder = WebApplication.CreateBuilder(args);
-<<<<<<< HEAD
+
 var connectionString = Environment.GetEnvironmentVariable("IceCreams_ConnectionString") ?? "Data Source=IceCreams.db";
     
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddDbContext<IceCreamDb>(options => options.UseInMemoryDatabase("items"));
+builder.Services.AddDbContext<IceCreamContext>(options => options.UseInMemoryDatabase("items"));
 builder.Services.AddSwaggerGen(c =>
 {
      c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ice Cream Store", Description = "We hope you love Ice Cream as much as we do!", Version  = "v1"});
 });
     
-=======
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -29,7 +29,6 @@ builder.Services.AddDbContext<IceCreamContext>(options =>
 
 builder.Services.AddSwaggerGen();
 
->>>>>>> f7f57082477954a0a19dae95d9ba0a51996f0a4a
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
