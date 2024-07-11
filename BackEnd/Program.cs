@@ -1,9 +1,15 @@
-using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using IceCreamStore.Data;
+using IceCreamStore.Models;
 using IceCreamStore.DB;
 
 var builder = WebApplication.CreateBuilder(args);
+<<<<<<< HEAD
 var connectionString = Environment.GetEnvironmentVariable("IceCreams_ConnectionString") ?? "Data Source=IceCreams.db";
     
 builder.Services.AddEndpointsApiExplorer();
@@ -13,48 +19,41 @@ builder.Services.AddSwaggerGen(c =>
      c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ice Cream Store", Description = "We hope you love Ice Cream as much as we do!", Version  = "v1"});
 });
     
+=======
+
+// Add services to the container.
+builder.Services.AddControllers();
+
+builder.Services.AddDbContext<IceCreamContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddSwaggerGen();
+
+>>>>>>> f7f57082477954a0a19dae95d9ba0a51996f0a4a
 var app = builder.Build();
-    
+
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-   app.UseSwagger();
-   app.UseSwaggerUI(c =>
-   {
-      c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ice Cream Store");
-   });
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IceCreamShop v1"));
 }
-   
-app.MapGet("/iceCreams/{id}", (int id) => IceCreamDB.GetIceCream(id));
-app.MapGet("/iceCreams", () => IceCreamDB.GetIceCreams());
-app.MapPost("/iceCreams", (IceCream iceCream) => IceCreamDB.CreateIceCream(iceCream));
-app.MapPut("/iceCreams", (IceCream iceCream) => IceCreamDB.UpdateIceCream(iceCream));
-app.MapDelete("/iceCreams/{id}", (int id) => IceCreamDB.RemoveIceCream(id));
-app.MapGet("/iceCreams", async (IceCreamDb db) => await db.IceCreams.ToListAsync());
-app.MapPost("/iceCream", async (IceCreamDb db, IceCream iceCream) =>
+
+app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+// Seed the database
+using (var scope = app.Services.CreateScope())
 {
-    await db.IceCreams.AddAsync(iceCream);
-    await db.SaveChangesAsync();
-    return Results.Created($"/iceCream/{iceCream.Id}", iceCream);
-});
-app.MapGet("/iceCream/{id}", async (IceCreamDb db, int id) => await db.IceCreams.FindAsync(id));
-app.MapPut("/iceCream/{id}", async (IceCreamDb db, IceCream updateiceCream, int id) =>
-{
-      var iceCream = await db.IceCreams.FindAsync(id);
-      if (iceCream is null) return Results.NotFound();
-      iceCream.Name = updateiceCream.Name;
-      await db.SaveChangesAsync();
-      return Results.NoContent();
-});
-app.MapDelete("/iceCream/{id}", async (IceCreamDb db, int id) =>
-{
-   var iceCream = await db.IceCreams.FindAsync(id);
-   if (iceCream is null)
-   {
-      return Results.NotFound();
-   }
-   db.IceCreams.Remove(iceCream);
-   await db.SaveChangesAsync();
-   return Results.Ok();
-});
+   var services = scope.ServiceProvider;
+   var dbContext = services.GetRequiredService<IceCreamContext>();
+   Db.Initialize(dbContext);
+}
 
 app.Run();
