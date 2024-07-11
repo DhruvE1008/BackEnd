@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using IceCreamStore.DB;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("IceCreams") ?? "Data Source=IceCreams.db";
+var connectionString = Environment.GetEnvironmentVariable("IceCreams_ConnectionString") ?? "Data Source=IceCreams.db";
     
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<IceCreamDb>(options => options.UseInMemoryDatabase("items"));
